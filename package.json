@@ -1,0 +1,22 @@
+{
+  "name": "weather-widget",
+  "version": "1.0.0",
+  "description": "Mirco frontend for Weather data",
+  "homepage": "https://github.com/FreaKnight/weather-widget#readme",
+  "bugs": {
+    "url": "https://github.com/FreaKnight/weather-widget/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FreaKnight/weather-widget.git"
+  },
+  "license": "GPL-3.0",
+  "author": "Sean Jonker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}
