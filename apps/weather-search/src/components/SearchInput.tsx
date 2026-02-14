@@ -6,11 +6,15 @@ const SearchInput = () => {
 
     const handleSave = () => {
         const settings = LocalDB.getSettings();
+        if (settings.favorites.includes(city)) {
+            console.warn(`City ${city} was already pinned.`);
+            return;
+        }
         LocalDB.saveSettings({
             ...settings,
             favorites: [...settings.favorites, city],
         });
-        // Log or alert save state
+        console.log(`City ${city} is pinned!`);
         // TODO: have a better solution to indicate save status
     };
 
