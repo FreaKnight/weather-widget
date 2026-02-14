@@ -17,11 +17,12 @@
     "packages/*"
   ],
   "scripts": {
+    "start:all": "pnpm -r --parallel dev",
     "type-check:all": "pnpm -r exec tsc --noEmit",
+    "dev:search": "pnpm -F weather-search dev",
     "dev:shell": "pnpm -F shell dev",
     "build:shell": "pnpm -F shell build",
     "preview:shell": "pnpm -f shell preview",
-    "dev:all": "pnpm -F \"*\" dev",
     "build:all": "pnpm -r build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

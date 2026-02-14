@@ -1,26 +1,31 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import federation from '@originjs/vite-plugin-federation';
+import { resolve } from 'node:path';
 
 export default defineConfig({
-    root: './',
     base: '/',
     plugins: [
         react(),
         federation({
-            name: 'shell',
-            remotes: {
-                weather_search: 'http://localhost:5001/remoteEntry.js'
+            name: 'weather_search',
+            filename: 'remoteEntry.js',
+            exposes: {
+                './SearchInput': './src/components/SearchInput.tsx',
             },
-            shared: ['react', 'react-dom']
+            shared: ['react', 'react-dom', '@weather/storage']
         })
     ],
     build: {
         outDir: 'dist',
         emptyOutDir: true,
         modulePreload: false,
+        assetsDir: '',
         target: 'esnext',
         minify: false,
-        cssCodeSplit: false
+        cssCodeSplit: false,
+    },
+    server: {
+        port: 5001
     }
 });
