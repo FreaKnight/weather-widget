@@ -17,9 +17,8 @@
     "packages/*"
   ],
   "scripts": {
-    "start:all": "pnpm -r --parallel dev",
     "type-check:all": "pnpm -r exec tsc --noEmit",
-    "dev:search": "pnpm -F weather-search dev",
+    "dev:search": "pnpm -F weather-search preview",
     "dev:shell": "pnpm -F shell dev",
     "build:shell": "pnpm -F shell build",
     "preview:shell": "pnpm -f shell preview",

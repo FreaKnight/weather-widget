@@ -12,6 +12,9 @@ export const LocalDB = {
     },
     saveSettings: (settings: AppSettings): void => {
         localStorage.setItem(`${PREFIX}Settings`, JSON.stringify(settings));
+
+        const event = new CustomEvent('weather_storage_update', { detail: settings });
+        window.dispatchEvent(event);
     },
     getSettings: (): AppSettings => {
         const raw = localStorage.getItem(`${PREFIX}Settings`);

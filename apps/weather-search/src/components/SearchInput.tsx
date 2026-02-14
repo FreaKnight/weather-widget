@@ -15,6 +15,8 @@ const SearchInput = () => {
             favorites: [...settings.favorites, city],
         });
         console.log(`City ${city} is pinned!`);
+        // Clear value input to allow for another entry
+        setCity('');
         // TODO: have a better solution to indicate save status
     };
 

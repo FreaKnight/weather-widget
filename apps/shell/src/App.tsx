@@ -12,6 +12,16 @@ const App = () => {
         setFavorites(data.favorites);
     }, []);
 
+    useEffect(() => {
+        const handleUpdate = (event: any) => {
+            setFavorites(event.detail.favorites);
+        };
+
+        window.addEventListener('weather_storage_update', handleUpdate);
+
+        return () => window.removeEventListener('weather_storage_update', handleUpdate);
+    }, []);
+
     return (
         <div style={{ maxWidth: '800px', margin: '0 auto', fontFamily: 'sans-serif' }}>
             <header style={{ borderBottom: '1px solid #ccc', marginBottom: '2rem' }}>
