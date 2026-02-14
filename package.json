@@ -12,7 +12,10 @@
   },
   "license": "GPL-3.0",
   "author": "Sean Jonker",
-  "main": "index.js",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
