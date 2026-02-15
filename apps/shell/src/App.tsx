@@ -36,7 +36,7 @@ const App = () => {
                 </Suspense>
             </section>
             <section style={{ marginTop: '2rem' }}>
-                <h3>Your Pinned Cities</h3>
+                <h3>Your Saved Cities</h3>
                 <ul>
                     {favorites.map((city, i) => <li key={`${city}-${i}`}>{city}</li>)}
                 </ul>
