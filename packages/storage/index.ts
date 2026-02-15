@@ -21,3 +21,5 @@ export const LocalDB = {
         return raw ? JSON.parse(raw) : { unit: 'metric', theme: 'light', favorites: [] };
     }
 };
+
+export * from './types';

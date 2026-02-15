@@ -8,8 +8,7 @@
         "skipLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@weather/storage": ["packages/storage/index.ts"],
-            "@weather/types": ["packages/types/weather.ts"]
+            "@weather/storage": ["packages/storage/index.ts"]
         },
     }
 }
