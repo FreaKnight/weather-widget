@@ -22,7 +22,8 @@
     "dev:search": "pnpm -F weather-search preview",
     "dev:shell": "pnpm -F shell dev",
     "build:shell": "pnpm -F shell build",
-    "preview:shell": "pnpm -f shell preview",
+    "preview:shell": "pnpm -F shell preview",
+    "build:micro": "pnpm -F './apps/weather-*' build",
     "build:all": "pnpm -r build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

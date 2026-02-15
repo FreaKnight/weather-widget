@@ -18,6 +18,15 @@ const WeatherCards = () => {
         setWeatherData(results.filter(data => data.cod === 200));
     };
 
+    const handleDelete = (cityName: string) => {
+        const current = LocalDB.getSettings();
+        const updatedFavorites = current.favorites.filter((fav: string) => fav !== cityName);
+        LocalDB.saveSettings({
+            ...current,
+            favorites: updatedFavorites
+        });
+    }
+
     useEffect(() => {
         fetchWeather(cities);
 
@@ -32,13 +41,46 @@ const WeatherCards = () => {
 
     return (
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-            {weatherData.map((data) => (
-                <div key={data.id} style={{ border: '1px solid #ddd', padding: '1rem', borderRadius: '12px', background: '#f9f9f9', minWidth: '150px' }}>
-                    <h4>{data.name}</h4>
-                    <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{Math.round(data.main.temp)}°C</p>
-                    <p>{data.weather[0].description}</p>
-                </div>
-            ))}
+            {weatherData.map((data) => {
+                const cityIdentifier = `${data.name}, ${data.sys.country}`;
+
+                return (
+                    <div
+                        key={data.id}
+                        style={{
+                            border: '1px solid #ddd',
+                            padding: '1rem',
+                            borderRadius: '12px',
+                            background: '#f9f9f9',
+                            minWidth: '150px',
+                            position: 'relative'
+                        }}
+                    >
+                        <button
+                            onClick={() => handleDelete(cityIdentifier)}
+                            style={{
+                                position: 'absolute',
+                                top: '5px',
+                                right: '5px',
+                                border: 'none',
+                                background: 'transparent',
+                                cursor: 'pointer',
+                                fontSize: '1.2rem',
+                                color: '#999'
+                            }}
+                        >
+                            x
+                        </button>
+                        <h4>{data.name}</h4>
+                        <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
+                            {Math.round(data.main.temp)}°C
+                        </p>
+                        <p>
+                            {data.weather[0].description}
+                        </p>
+                    </div>
+                );
+            })}
         </div>
     );
 };
