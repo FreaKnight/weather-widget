@@ -2,8 +2,8 @@
   "name": "@weather/storage",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
-  "types": "./index.ts",
+  "main": "./index.ts",
+  "types": "./types/index.ts",
   "scripts": {
     "type-check": "tsc --noEmit",
     "build": "tsc",

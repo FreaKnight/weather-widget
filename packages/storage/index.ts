@@ -1,4 +1,4 @@
-import { WeatherData, AppSettings } from '../types';
+import { WeatherData, AppSettings } from './types';
 
 const PREFIX = 'W_APP_';
 
