@@ -1,10 +1,9 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import federation from '@originjs/vite-plugin-federation';
-import { resolve } from 'node:path';
 
 export default defineConfig({
-    base: '/',
+    envDir: '../../',
     plugins: [
         react(),
         federation({
@@ -17,15 +16,8 @@ export default defineConfig({
         })
     ],
     build: {
-        outDir: 'dist',
-        emptyOutDir: true,
-        modulePreload: false,
-        assetsDir: '',
         target: 'esnext',
+        assetsDir: '',
         minify: false,
-        cssCodeSplit: false,
-    },
-    server: {
-        port: 5001
     }
 });

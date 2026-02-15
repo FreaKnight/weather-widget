@@ -1,7 +1,8 @@
+/// <reference path="../../../../env.d.ts" />
+
 import React, { useState, useEffect } from 'react';
 import { LocalDB } from '@weather/storage';
 
-// TODO: make this env sharable across projects
 const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
 const SearchInput = () => {
