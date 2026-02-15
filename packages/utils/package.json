@@ -1,12 +1,9 @@
 {
-  "name": "@weather/storage",
+  "name": "utils",
   "version": "1.0.0",
   "description": "",
-  "main": "./index.ts",
-  "types": "./types/index.ts",
+  "main": "index.js",
   "scripts": {
-    "type-check": "tsc --noEmit",
-    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
