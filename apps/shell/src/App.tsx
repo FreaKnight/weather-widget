@@ -3,6 +3,8 @@ import { LocalDB } from '@weather/storage';
 
 // @ts-ignore
 const SearchInput = React.lazy(() => import('weather_search/SearchInput'));
+// @ts-ignore
+const WeatherCards = React.lazy(() => import('weather_display/WeatherCards'));
 
 const App = () => {
     const [favorites, setFavorites] = useState<string[]>([]);
@@ -38,6 +40,12 @@ const App = () => {
                 <ul>
                     {favorites.map((city, i) => <li key={`${city}-${i}`}>{city}</li>)}
                 </ul>
+            </section>
+            <section style={{ marginTop: '2rem' }}>
+                <h3>Current Weather</h3>
+                <Suspense fallback={<div>Loading Weather...</div>}>
+                    <WeatherCards />
+                </Suspense>
             </section>
         </div>
     );

@@ -18,6 +18,7 @@
   ],
   "scripts": {
     "type-check:all": "pnpm -r exec tsc --noEmit",
+    "dev:display": "pnpm -F weather-display preview",
     "dev:search": "pnpm -F weather-search preview",
     "dev:shell": "pnpm -F shell dev",
     "build:shell": "pnpm -F shell build",

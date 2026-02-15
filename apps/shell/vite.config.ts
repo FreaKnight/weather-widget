@@ -10,7 +10,8 @@ export default defineConfig({
         federation({
             name: 'shell',
             remotes: {
-                weather_search: 'http://localhost:5001/remoteEntry.js'
+                weather_search: 'http://localhost:5001/remoteEntry.js',
+                weather_display: 'http://localhost:5002/remoteEntry.js'
             },
             shared: ['react', 'react-dom']
         })
