@@ -29,18 +29,20 @@ const App = () => {
             <header style={{ borderBottom: '1px solid #ccc', marginBottom: '2rem' }}>
                 <h1>Weather OS Shell</h1>
             </header>
-            <section>
-                <h3>Find a City</h3>
-                <Suspense fallback={<div>Loading Search...</div>}>
-                    <SearchInput />
-                </Suspense>
-            </section>
-            <section style={{ marginTop: '2rem' }}>
-                <h3>Your Saved Cities</h3>
-                <ul>
-                    {favorites.map((city, i) => <li key={`${city}-${i}`}>{city}</li>)}
-                </ul>
-            </section>
+            <div style={{ display: 'flex' }}>
+                <section style={{ flex: 'auto', margin: '0 5px' }}>
+                    <h3>Find a City</h3>
+                    <Suspense fallback={<div>Loading Search...</div>}>
+                        <SearchInput />
+                    </Suspense>
+                </section>
+                <section style={{ margin: '0 5px', flex: 'auto' }}>
+                    <h3>Your Saved Cities</h3>
+                    <ul>
+                        {favorites.map((city, i) => <li key={`${city}-${i}`}>{city}</li>)}
+                    </ul>
+                </section>
+            </div>
             <section style={{ marginTop: '2rem' }}>
                 <h3>Current Weather</h3>
                 <Suspense fallback={<div>Loading Weather...</div>}>

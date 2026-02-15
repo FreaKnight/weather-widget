@@ -54,12 +54,12 @@ const SearchInput = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder='Search for a city...'
-                style={{ width: '97.7%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+                style={{ width: 'calc(100% - 18px)', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
             />
             {suggestions.length > 0 && (
                 <ul style={{
                     position: 'absolute',
-                    width: '40.9%',
+                    width: '22%',
                     background: '#fff',
                     border: '1px solid #ccc',
                     listStyle: 'none',
