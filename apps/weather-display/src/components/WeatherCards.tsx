@@ -1,27 +1,37 @@
 /// <reference path="../../../../env.d.ts" />
 
 import React, { useEffect, useState } from 'react';
-import { LocalDB } from '@weather/storage';
+import { Favorites, LocalDB, OpenWeatherData } from '@weather/storage';
+import { Coordinates } from 'packages/storage/types/Coordinates';
 
 const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
 const WeatherCards = () => {
-    const [weatherData, setWeatherData] = useState([]);
-    const [cities, setCities] = useState(LocalDB.getSettings().favorites);
+    const [weatherData, setWeatherData] = useState<OpenWeatherData[]>([]);
+    const [favorites, setFavorites] = useState<Favorites[]>(LocalDB.getSettings().favorites);
 
-    const fetchWeather = async (cityList: string[]) => {
-        // TODO: improve the await in loop
-        const promises = cityList.map(async (city) => {
-                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`);
+    const fetchWeather = async (currentFavorites: Favorites[]) => {
+        if (currentFavorites?.length > 0) {
+            // TODO: improve the await in loop
+            const promises = currentFavorites.map(async (favorite) => {
+                const { city } = favorite;
+                const response = await fetch(
+                    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
+                );
                 return response.json();
             });
-        const results = await Promise.all(promises);
-        setWeatherData(results.filter(data => data.cod === 200));
+            const results = await Promise.all(promises);
+            setWeatherData(results.filter(data => data.cod === 200));
+        }
     };
 
-    const handleDelete = (cityName: string) => {
+    const handleDelete = (selectedCoords: Coordinates) => {
+        const { lat, lon } = selectedCoords;
         const current = LocalDB.getSettings();
-        const updatedFavorites = current.favorites.filter((fav: string) => fav !== cityName);
+        const updatedFavorites = current.favorites.filter((fav) => {
+            const { coords } = fav;
+            return coords.lat !== lat && coords.lon !== lon;
+        });
         LocalDB.saveSettings({
             ...current,
             favorites: updatedFavorites
@@ -29,10 +39,10 @@ const WeatherCards = () => {
     }
 
     useEffect(() => {
-        fetchWeather(cities);
+        fetchWeather(favorites);
 
         const handleUpdate = (event: any) => {
-            setCities(event.detail.favorites);
+            setFavorites(event.detail.favorites);
             fetchWeather(event.detail.favorites);
         }
 
@@ -43,7 +53,7 @@ const WeatherCards = () => {
     return (
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             {weatherData.map((data) => {
-                const cityIdentifier = `${data.name}, ${data.sys.country}`;
+                const { coord } = data;
 
                 return (
                     <div
@@ -58,7 +68,7 @@ const WeatherCards = () => {
                         }}
                     >
                         <button
-                            onClick={() => handleDelete(cityIdentifier)}
+                            onClick={() => handleDelete({ lat: coord.lat, lon: coord.lon })}
                             style={{
                                 position: 'absolute',
                                 top: '5px',

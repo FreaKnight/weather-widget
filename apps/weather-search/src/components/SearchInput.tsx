@@ -1,13 +1,13 @@
 /// <reference path="../../../../env.d.ts" />
 
 import React, { useState, useEffect } from 'react';
-import { LocalDB } from '@weather/storage';
+import { Favorites, LocalDB, OpenWeatherGeoData } from '@weather/storage';
 
 const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
 const SearchInput = () => {
-    const [query, setQuery] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
+    const [query, setQuery] = useState<string>('');
+    const [suggestions, setSuggestions] = useState<OpenWeatherGeoData[]>([]);
 
     useEffect(() => {
         const fetchCities = async () => {
@@ -17,10 +17,13 @@ const SearchInput = () => {
             }
 
             try {
-                const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${API_KEY}`);
+                const response = await fetch(
+                    `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=10&appid=${API_KEY}`
+                );
                 const data = await response.json();
                 setSuggestions(data);
             } catch (e) {
+                setSuggestions([]);
                 console.error('Geocoding failed', e);
             }
         };
@@ -29,15 +32,14 @@ const SearchInput = () => {
         return () => clearTimeout(timeoutId);
     }, [query]);
 
-    const handleSelect = (city: any) => {
-        const cityName = `${city.name}, ${city.country}`;
+    const handleSelect = (favorite: Favorites) => {
         const current = LocalDB.getSettings();
 
         LocalDB.saveSettings({ 
             ...current,
             favorites: [
                 ...current.favorites,
-                cityName
+                favorite
             ]
         });
 
@@ -68,15 +70,24 @@ const SearchInput = () => {
                     zIndex: 2,
                     boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
                 }}>
-                    {suggestions.map((city, i) => {
-                        const cityName = `${city.name}, ${city.country}`;
+                    {suggestions.map((suggestion) => {
+                        const { lat, lon, name, state, country } = suggestion;
+                        const coords = `${lat}-${lon}`;
+                        const city = `${name}, ${state ? state + ',' : ''}${country}`;
                         const current = LocalDB.getSettings();
-                        const disabled = current.favorites.includes(cityName);
+                        const disabled = !!current.favorites.filter((favorite) => {
+                            const { coords } = favorite;
+                            return coords.lat === lat && coords.lon === lon;
+                        });
                         return (
                             <li
-                                key={`${city.name}-${i}`}
-                                onClick={() => !disabled && handleSelect(city)}
+                                key={coords}
+                                onClick={() => !disabled && handleSelect({
+                                    city,
+                                    coords: { lat, lon }
+                                })}
                                 style={{
+                                    color: disabled ? '#888' : '#000',
                                     padding: '8px',
                                     borderBottom: '1px solid #eee',
                                     backgroundColor: disabled ? '#aaa' : '#fff',
@@ -84,7 +95,7 @@ const SearchInput = () => {
                                 }}
                                 aria-disabled={disabled}
                             >
-                                {city.name}, {city.state && `${city.state}, `}{city.country}
+                                {city}
                             </li>
                         );
                     })}
