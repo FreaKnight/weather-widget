@@ -1,4 +1,6 @@
-export interface WeatherData {
+import { Coordinates } from './Coordinates';
+
+export interface WeatherStorageData {
     city: string;
     temp: number;
     condition: string;
@@ -7,8 +9,13 @@ export interface WeatherData {
     timestamp: number;
 };
 
+export interface Favorites {
+    cityName: string,
+    coords: Coordinates
+}
+
 export interface AppSettings {
     unit: 'metric' | 'imperial';
     theme: 'light' | 'dark';
-    favorites: string[];
+    favorites: Favorites[];
 }

@@ -1,12 +1,12 @@
-import { WeatherData, AppSettings } from './types';
+import { WeatherStorageData, AppSettings } from './types';
 
 const PREFIX = 'W_APP_';
 
 export const LocalDB = {
-    saveForecast: (city: string, data: WeatherData): void => {
+    saveForecast: (city: string, data: WeatherStorageData): void => {
         localStorage.setItem(`${PREFIX}FC_${city.toUpperCase()}`, JSON.stringify(data));
     },
-    getForecast: (city: string): WeatherData | null => {
+    getForecast: (city: string): WeatherStorageData | null => {
         const raw = localStorage.getItem(`${PREFIX}_FC_${city.toUpperCase()}`);
         return raw ? JSON.parse(raw) : null;
     },

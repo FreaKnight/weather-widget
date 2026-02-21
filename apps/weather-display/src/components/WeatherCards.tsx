@@ -1,27 +1,35 @@
 /// <reference path="../../../../env.d.ts" />
 
 import React, { useEffect, useState } from 'react';
-import { LocalDB } from '@weather/storage';
+import { Favorites, LocalDB, OpenWeatherData } from '@weather/storage';
+import { Coordinates } from 'packages/storage/types/Coordinates';
 
 const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
 const WeatherCards = () => {
-    const [weatherData, setWeatherData] = useState([]);
-    const [cities, setCities] = useState(LocalDB.getSettings().favorites);
+    const [weatherData, setWeatherData] = useState<OpenWeatherData[]>([]);
+    const [favorites, setFavorites] = useState<Favorites[]>(LocalDB.getSettings().favorites);
 
-    const fetchWeather = async (cityList: string[]) => {
+    const fetchWeather = async (favoriteList: Favorites[]) => {
         // TODO: improve the await in loop
-        const promises = cityList.map(async (city) => {
-                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`);
-                return response.json();
-            });
-        const results = await Promise.all(promises);
-        setWeatherData(results.filter(data => data.cod === 200));
+        const promises = favoriteList.map(async ({ coords }) => {
+            const { lat, lon } = coords;
+            const response = await fetch(
+                `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
+            );
+            return response.json();
+        });
+        const results: OpenWeatherData[] = await Promise.all(promises);
+        console.log('WeatherCards', { results });
+        setWeatherData(results);
     };
 
-    const handleDelete = (cityName: string) => {
+    const handleDelete = (selectedCoord: Coordinates) => {
         const current = LocalDB.getSettings();
-        const updatedFavorites = current.favorites.filter((fav: string) => fav !== cityName);
+        const updatedFavorites = current.favorites.filter((favorite) => {
+            const { coords } = favorite;
+            return coords.lat !== selectedCoord.lat && coords.lon !== selectedCoord.lon;
+        });
         LocalDB.saveSettings({
             ...current,
             favorites: updatedFavorites
@@ -29,10 +37,10 @@ const WeatherCards = () => {
     }
 
     useEffect(() => {
-        fetchWeather(cities);
+        fetchWeather(favorites);
 
         const handleUpdate = (event: any) => {
-            setCities(event.detail.favorites);
+            setFavorites(event.detail.favorites);
             fetchWeather(event.detail.favorites);
         }
 
@@ -43,11 +51,16 @@ const WeatherCards = () => {
     return (
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             {weatherData.map((data) => {
-                const cityIdentifier = `${data.name}, ${data.sys.country}`;
+                // const cityIdentifier = `${data.name}, ${data.sys.country}`;
+                const { lat, lon } = data;
+                const key = `${data.lat}-${data.lon}`;
+                const matchedFavorite = favorites.find(({ coords }) => {
+                    return lat === coords.lat && lon === coords.lon;
+                });
 
                 return (
                     <div
-                        key={data.id}
+                        key={key}
                         style={{
                             border: '1px solid #ddd',
                             padding: '1rem',
@@ -58,7 +71,7 @@ const WeatherCards = () => {
                         }}
                     >
                         <button
-                            onClick={() => handleDelete(cityIdentifier)}
+                            onClick={() => handleDelete({ lat, lon })}
                             style={{
                                 position: 'absolute',
                                 top: '5px',
@@ -72,12 +85,12 @@ const WeatherCards = () => {
                         >
                             x
                         </button>
-                        <h4>{data.name}</h4>
+                        <h4>{matchedFavorite?.cityName ?? 'Undefined'}</h4>
                         <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-                            {Math.round(data.main.temp)}°C
+                            {Math.round(data.current.temp)}°C
                         </p>
                         <p>
-                            {data.weather[0].description}
+                            {data.current.weather.description}
                         </p>
                     </div>
                 );
