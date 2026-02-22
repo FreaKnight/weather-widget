@@ -31,19 +31,11 @@ const WeatherCards = () => {
         }
     };
 
-    const handleDelete = (selectedCoords: Coordinates) => {
-        const { lat, lon } = selectedCoords;
+    const handleDelete = (cityName: string) => {
         const current = LocalDB.getSettings();
-        const updatedFavorites = current.favorites.filter((fav) => {
-            const { coords } = fav;
-            // The API coords are not accurate between the weather data and Geo requests, flooring results for match
-            // Adding another api request to normalize coords shouldnt happen, api should be updated to return consistent results over its endpoints
-            // This presents an issue with deleting saved cities that are within a deg difference
-            return (
-                Math.floor(coords.lat) !== Math.floor(lat) &&
-                Math.floor(coords.lon) !== Math.floor(lon)
-            );
-        });
+        const updatedFavorites = current.favorites.filter(
+            (fav) => !fav.city.includes(cityName)
+        );
         LocalDB.saveSettings({
             ...current,
             favorites: updatedFavorites
@@ -74,9 +66,7 @@ const WeatherCards = () => {
                     <Card
                         key={data.id}
                         title={data.name}
-                        onClose={() =>
-                            handleDelete({ lat: coord.lat, lon: coord.lon })
-                        }
+                        onClose={() => handleDelete(data.name)}
                     >
                         <div style={{ textAlign: 'center' }}>
                             <p style={{ fontSize: '2rem', margin: '10px 0' }}>
