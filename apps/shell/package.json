@@ -13,13 +13,14 @@
     "license": "GPL-3.0",
     "type": "module",
     "devDependencies": {
-        "@originjs/vite-plugin-federation": "1.4.1",
+        "@module-federation/sdk": "2.0.1",
+        "@module-federation/vite": "1.11.0",
         "@types/node": "25.2.3",
         "@types/react": "19.2.14",
         "@types/react-dom": "19.2.3",
         "@vitejs/plugin-react": "5.1.4",
         "typescript": "5.9.3",
-        "vite": "7.3.1"
+        "vite": "7.1.7"
     },
     "dependencies": {
         "@weather/storage": "workspace:*",

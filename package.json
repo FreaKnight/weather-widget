@@ -17,19 +17,26 @@
         "packages/*"
     ],
     "scripts": {
-        "type-check:all": "pnpm -r exec tsc --noEmit",
-        "dev:display": "pnpm -F weather-display preview",
-        "dev:search": "pnpm -F weather-search preview",
-        "dev:shell": "pnpm -F shell dev",
-        "build:shell": "pnpm -F shell build",
-        "preview:shell": "pnpm -F shell preview",
-        "build:micro": "pnpm -F './apps/weather-*' build",
-        "build:all": "pnpm -r build",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "clean": "pnpm -r exec rm -rf dist .vite .__mf__temp .__mf__win",
+        "dev": "MF_DEV=true pnpm -r --parallel dev",
+        "build": "pnpm -r run build",
+        "type-check": "pnpm -r run type-check"
     },
     "devDependencies": {
+        "@module-federation/dts-plugin": "2.0.1",
         "@types/node": "25.2.3",
         "typescript": "5.9.3"
     },
-    "packageManager": "pnpm@10.27.0"
+    "dependencies": {
+        "react": "19.2.4",
+        "react-dom": "19.2.4"
+    },
+    "packageManager": "pnpm@10.27.0",
+    "pnpm": {
+        "overrides": {
+            "vite": "7.1.7",
+            "react": "19.2.4",
+            "react-dom": "19.2.4"
+        }
+    }
 }

@@ -1,19 +1,18 @@
 {
-    "name": "weather-display",
+    "name": "weather_search",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
-    "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
-        "preview": "vite preview --port 5002 --strictPort",
+        "build": "tsc && vite build",
+        "preview": "vite preview --port 5001 --strictPort",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
     "author": "Sean Jonker",
     "license": "GPL-3.0",
-    "packageManager": "pnpm@10.27.0",
+    "type": "module",
     "dependencies": {
         "@weather/storage": "workspace:*",
         "@weather/ui": "workspace:*",
@@ -21,11 +20,13 @@
         "react-dom": "19.2.4"
     },
     "devDependencies": {
-        "@originjs/vite-plugin-federation": "1.4.1",
+        "@module-federation/sdk": "2.0.1",
+        "@module-federation/vite": "1.11.0",
         "@types/node": "25.2.3",
         "@types/react": "19.2.14",
         "@vitejs/plugin-react": "5.1.4",
         "typescript": "5.9.3",
-        "vite": "7.3.1"
-    }
+        "vite": "7.1.7"
+    },
+    "packageManager": "pnpm@10.27.0"
 }
