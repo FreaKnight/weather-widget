@@ -35,12 +35,9 @@ const SearchInput = () => {
     const handleSelect = (favorite: Favorites) => {
         const current = LocalDB.getSettings();
 
-        LocalDB.saveSettings({ 
+        LocalDB.saveSettings({
             ...current,
-            favorites: [
-                ...current.favorites,
-                favorite
-            ]
+            favorites: [...current.favorites, favorite]
         });
 
         setQuery('');
@@ -50,42 +47,60 @@ const SearchInput = () => {
     };
 
     return (
-        <div style={{ border: '2px solid #3b82f6', padding: '1rem', borderRadius: '8px' }}>
+        <div
+            style={{
+                border: '2px solid #3b82f6',
+                padding: '1rem',
+                borderRadius: '8px'
+            }}
+        >
             <input
-                type='text'
+                type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder='Search for a city...'
-                style={{ width: 'calc(100% - 18px)', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+                placeholder="Search for a city..."
+                style={{
+                    width: 'calc(100% - 18px)',
+                    padding: '8px',
+                    borderRadius: '4px',
+                    border: '1px solid #ccc'
+                }}
             />
             {suggestions.length > 0 && (
-                <ul style={{
-                    position: 'absolute',
-                    width: '22%',
-                    background: '#fff',
-                    border: '1px solid #ccc',
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0,
-                    zIndex: 2,
-                    boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-                }}>
+                <ul
+                    style={{
+                        position: 'absolute',
+                        width: '22%',
+                        background: '#fff',
+                        border: '1px solid #ccc',
+                        listStyle: 'none',
+                        padding: 0,
+                        margin: 0,
+                        zIndex: 2,
+                        boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+                    }}
+                >
                     {suggestions.map((suggestion) => {
                         const { lat, lon, name, state, country } = suggestion;
                         const coords = `${lat}-${lon}`;
                         const city = `${name}, ${state ? state + ',' : ''}${country}`;
                         const current = LocalDB.getSettings();
-                        const disabled = !!current.favorites.filter((favorite) => {
-                            const { coords } = favorite;
-                            return coords.lat === lat && coords.lon === lon;
-                        });
+                        const disabled = !!current.favorites.filter(
+                            (favorite) => {
+                                const { coords } = favorite;
+                                return coords.lat === lat && coords.lon === lon;
+                            }
+                        );
                         return (
                             <li
                                 key={coords}
-                                onClick={() => !disabled && handleSelect({
-                                    city,
-                                    coords: { lat, lon }
-                                })}
+                                onClick={() =>
+                                    !disabled &&
+                                    handleSelect({
+                                        city,
+                                        coords: { lat, lon }
+                                    })
+                                }
                                 style={{
                                     color: disabled ? '#888' : '#000',
                                     padding: '8px',

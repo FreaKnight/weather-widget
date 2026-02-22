@@ -8,7 +8,9 @@ const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
 const WeatherCards = () => {
     const [weatherData, setWeatherData] = useState<OpenWeatherData[]>([]);
-    const [favorites, setFavorites] = useState<Favorites[]>(LocalDB.getSettings().favorites);
+    const [favorites, setFavorites] = useState<Favorites[]>(
+        LocalDB.getSettings().favorites
+    );
 
     const fetchWeather = async (currentFavorites: Favorites[]) => {
         if (currentFavorites?.length > 0) {
@@ -21,7 +23,7 @@ const WeatherCards = () => {
                 return response.json();
             });
             const results = await Promise.all(promises);
-            setWeatherData(results.filter(data => data.cod === 200));
+            setWeatherData(results.filter((data) => data.cod === 200));
         }
     };
 
@@ -36,7 +38,7 @@ const WeatherCards = () => {
             ...current,
             favorites: updatedFavorites
         });
-    }
+    };
 
     useEffect(() => {
         fetchWeather(favorites);
@@ -44,10 +46,11 @@ const WeatherCards = () => {
         const handleUpdate = (event: any) => {
             setFavorites(event.detail.favorites);
             fetchWeather(event.detail.favorites);
-        }
+        };
 
         window.addEventListener('weather_storage_update', handleUpdate);
-        return () => window.removeEventListener('weather_storage_update', handleUpdate);
+        return () =>
+            window.removeEventListener('weather_storage_update', handleUpdate);
     }, []);
 
     return (
@@ -68,7 +71,9 @@ const WeatherCards = () => {
                         }}
                     >
                         <button
-                            onClick={() => handleDelete({ lat: coord.lat, lon: coord.lon })}
+                            onClick={() =>
+                                handleDelete({ lat: coord.lat, lon: coord.lon })
+                            }
                             style={{
                                 position: 'absolute',
                                 top: '5px',
@@ -86,9 +91,7 @@ const WeatherCards = () => {
                         <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
                             {Math.round(data.main.temp)}°C
                         </p>
-                        <p>
-                            {data.weather[0].description}
-                        </p>
+                        <p>{data.weather[0].description}</p>
                     </div>
                 );
             })}

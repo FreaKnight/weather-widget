@@ -15,7 +15,7 @@ export const Card: React.FC<CardProps> = ({ children, title, onClose }) => (
             background: '#fff',
             boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
             position: 'relative',
-            minWidth: '200px',
+            minWidth: '200px'
         }}
     >
         {onClose && (
@@ -28,7 +28,7 @@ export const Card: React.FC<CardProps> = ({ children, title, onClose }) => (
                     border: 'none',
                     background: 'none',
                     cursor: 'pointer',
-                    fontSize: '1.2rem',
+                    fontSize: '1.2rem'
                 }}
             >
                 x
@@ -38,7 +38,7 @@ export const Card: React.FC<CardProps> = ({ children, title, onClose }) => (
             <h4
                 style={{
                     margin: '0 0 12px 0',
-                    color: '#333',
+                    color: '#333'
                 }}
             >
                 {title}

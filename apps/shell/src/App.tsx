@@ -1,5 +1,5 @@
 import React, { useState, Suspense, useEffect } from 'react';
-import { LocalDB } from '@weather/storage';
+import { Favorites, LocalDB } from '@weather/storage';
 
 // @ts-ignore
 const SearchInput = React.lazy(() => import('weather_search/SearchInput'));
@@ -7,11 +7,11 @@ const SearchInput = React.lazy(() => import('weather_search/SearchInput'));
 const WeatherCards = React.lazy(() => import('weather_display/WeatherCards'));
 
 const App = () => {
-    const [favorites, setFavorites] = useState<string[]>([]);
+    const [favorites, setFavorites] = useState<Favorites[]>([]);
 
     useEffect(() => {
         const data = LocalDB.getSettings();
-        setFavorites(data.favorites);
+        setFavorites(data?.favorites ?? []);
     }, []);
 
     useEffect(() => {
@@ -21,12 +21,21 @@ const App = () => {
 
         window.addEventListener('weather_storage_update', handleUpdate);
 
-        return () => window.removeEventListener('weather_storage_update', handleUpdate);
+        return () =>
+            window.removeEventListener('weather_storage_update', handleUpdate);
     }, []);
 
     return (
-        <div style={{ maxWidth: '800px', margin: '0 auto', fontFamily: 'sans-serif' }}>
-            <header style={{ borderBottom: '1px solid #ccc', marginBottom: '2rem' }}>
+        <div
+            style={{
+                maxWidth: '800px',
+                margin: '0 auto',
+                fontFamily: 'sans-serif',
+            }}
+        >
+            <header
+                style={{ borderBottom: '1px solid #ccc', marginBottom: '2rem' }}
+            >
                 <h1>Weather OS Shell</h1>
             </header>
             <div style={{ display: 'flex' }}>
@@ -39,7 +48,14 @@ const App = () => {
                 <section style={{ margin: '0 5px', flex: 'auto' }}>
                     <h3>Your Saved Cities</h3>
                     <ul>
-                        {favorites.map((city, i) => <li key={`${city}-${i}`}>{city}</li>)}
+                        {favorites.map((favorite) => {
+                            const { city, coords } = favorite;
+                            return (
+                                <li key={`${coords.lat}-${coords.lon}`}>
+                                    {city}
+                                </li>
+                            );
+                        })}
                     </ul>
                 </section>
             </div>

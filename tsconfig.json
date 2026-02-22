@@ -9,6 +9,6 @@
         "baseUrl": ".",
         "paths": {
             "@weather/storage": ["packages/storage/index.ts"]
-        },
+        }
     }
 }

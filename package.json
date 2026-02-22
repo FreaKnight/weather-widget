@@ -1,35 +1,35 @@
 {
-  "name": "weather-widget",
-  "version": "1.0.0",
-  "description": "Mirco frontend for Weather data",
-  "homepage": "https://github.com/FreaKnight/weather-widget#readme",
-  "bugs": {
-    "url": "https://github.com/FreaKnight/weather-widget/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/FreaKnight/weather-widget.git"
-  },
-  "license": "GPL-3.0",
-  "author": "Sean Jonker",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "scripts": {
-    "type-check:all": "pnpm -r exec tsc --noEmit",
-    "dev:display": "pnpm -F weather-display preview",
-    "dev:search": "pnpm -F weather-search preview",
-    "dev:shell": "pnpm -F shell dev",
-    "build:shell": "pnpm -F shell build",
-    "preview:shell": "pnpm -F shell preview",
-    "build:micro": "pnpm -F './apps/weather-*' build",
-    "build:all": "pnpm -r build",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "devDependencies": {
-    "@types/node": "25.2.3",
-    "typescript": "5.9.3"
-  },
-  "packageManager": "pnpm@10.27.0"
+    "name": "weather-widget",
+    "version": "1.0.0",
+    "description": "Mirco frontend for Weather data",
+    "homepage": "https://github.com/FreaKnight/weather-widget#readme",
+    "bugs": {
+        "url": "https://github.com/FreaKnight/weather-widget/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/FreaKnight/weather-widget.git"
+    },
+    "license": "GPL-3.0",
+    "author": "Sean Jonker",
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "scripts": {
+        "type-check:all": "pnpm -r exec tsc --noEmit",
+        "dev:display": "pnpm -F weather-display preview",
+        "dev:search": "pnpm -F weather-search preview",
+        "dev:shell": "pnpm -F shell dev",
+        "build:shell": "pnpm -F shell build",
+        "preview:shell": "pnpm -F shell preview",
+        "build:micro": "pnpm -F './apps/weather-*' build",
+        "build:all": "pnpm -r build",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "devDependencies": {
+        "@types/node": "25.2.3",
+        "typescript": "5.9.3"
+    },
+    "packageManager": "pnpm@10.27.0"
 }

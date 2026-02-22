@@ -1,25 +1,25 @@
 {
-  "name": "@weather/ui",
-  "version": "1.0.0",
-  "description": "",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "peerDependencies": {
-    "react": "19.2.4"
-  },
-  "keywords": [],
-  "license": "GPL-3.0",
-  "author": "Sean Jonker",
-  "packageManager": "pnpm@10.27.0",
-  "dependencies": {
-    "react-dom": "19.2.4"
-  },
-  "devDependencies": {
-    "@types/node": "25.2.3",
-    "@types/react": "19.2.14",
-    "typescript": "5.9.3"
-  }
+    "name": "@weather/ui",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "peerDependencies": {
+        "react": "19.2.4"
+    },
+    "keywords": [],
+    "license": "GPL-3.0",
+    "author": "Sean Jonker",
+    "packageManager": "pnpm@10.27.0",
+    "dependencies": {
+        "react-dom": "19.2.4"
+    },
+    "devDependencies": {
+        "@types/node": "25.2.3",
+        "@types/react": "19.2.14",
+        "typescript": "5.9.3"
+    }
 }

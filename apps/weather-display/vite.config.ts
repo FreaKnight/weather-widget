@@ -10,7 +10,7 @@ export default defineConfig({
             name: 'weather-display',
             filename: 'remoteEntry.js',
             exposes: {
-                './WeatherCards': './src/components/WeatherCards.tsx',
+                './WeatherCards': './src/components/WeatherCards.tsx'
             },
             shared: ['react', 'react-dom', '@weather/storage']
         })
@@ -18,6 +18,6 @@ export default defineConfig({
     build: {
         target: 'esnext',
         assetsDir: '',
-        minify: false,
+        minify: false
     }
 });

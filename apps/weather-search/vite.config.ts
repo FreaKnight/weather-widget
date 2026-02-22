@@ -10,7 +10,7 @@ export default defineConfig({
             name: 'weather_search',
             filename: 'remoteEntry.js',
             exposes: {
-                './SearchInput': './src/components/SearchInput.tsx',
+                './SearchInput': './src/components/SearchInput.tsx'
             },
             shared: ['react', 'react-dom', '@weather/storage']
         })
@@ -18,6 +18,6 @@ export default defineConfig({
     build: {
         target: 'esnext',
         assetsDir: '',
-        minify: false,
+        minify: false
     }
 });

@@ -1,13 +1,13 @@
 {
-  "name": "utils",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "Sean Jonker",
-  "license": "GPL-3.0",
-  "packageManager": "pnpm@10.27.0"
+    "name": "utils",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "Sean Jonker",
+    "license": "GPL-3.0",
+    "packageManager": "pnpm@10.27.0"
 }
