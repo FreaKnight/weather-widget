@@ -51,7 +51,7 @@ const SearchInput = () => {
         <div
             style={{
                 position: 'relative',
-                width: '350px'
+                width: '100%'
             }}
         >
             <Input

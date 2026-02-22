@@ -1,5 +1,6 @@
 import React, { useState, Suspense, useEffect } from 'react';
 import { Favorites, LocalDB } from '@weather/storage';
+import { Button, Card } from '@weather/ui';
 
 // @ts-ignore
 const SearchInput = React.lazy(() => import('weather_search/SearchInput'));
@@ -28,47 +29,67 @@ const App = () => {
     return (
         <div
             style={{
-                maxWidth: '800px',
-                margin: '0 auto',
+                minHeight: '100vh',
+                backgroundColor: '#f0f2f5',
+                paddingBottom: '40px',
                 fontFamily: 'sans-serif'
             }}
         >
-            <header
-                style={{ borderBottom: '1px solid #ccc', marginBottom: '2rem' }}
+            <nav
+                style={{
+                    padding: '1rem 2rem',
+                    background: '#fff',
+                    borderBottom: '1px solid #ddd',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                }}
             >
-                <h1>Weather OS Shell</h1>
-            </header>
-            <div style={{ display: 'flex' }}>
-                <section style={{ flex: 'auto', margin: '0 5px' }}>
-                    <h3>Find a City</h3>
-                    <Suspense fallback={<div>Loading Search...</div>}>
-                        <SearchInput />
-                    </Suspense>
-                </section>
-                <section style={{ margin: '0 5px', flex: 'auto' }}>
-                    <h3>Your Saved Cities</h3>
-                    <ul>
-                        {favorites.map((favorite) => {
-                            if (favorite) {
-                                const { city, coords } = favorite;
-                                if (city && coords?.lat && coords?.lon) {
-                                    return (
-                                        <li key={`${coords.lat}-${coords.lon}`}>
-                                            {city}
-                                        </li>
-                                    );
-                                }
-                            }
-                        })}
-                    </ul>
-                </section>
-            </div>
-            <section style={{ marginTop: '2rem' }}>
-                <h3>Current Weather</h3>
-                <Suspense fallback={<div>Loading Weather...</div>}>
-                    <WeatherCards />
-                </Suspense>
-            </section>
+                <h2 style={{ margin: 0 }}>☁️ WeatherOS</h2>
+                <Button onClick={() => window.location.reload()}>
+                    Refresh App
+                </Button>
+            </nav>
+            <main
+                style={{
+                    maxWidth: '1100px',
+                    margin: '2rem auto',
+                    padding: '0 1rem'
+                }}
+            >
+                <div
+                    style={{
+                        display: 'grid',
+                        gridTemplateColumns: '350px 1fr',
+                        gap: '2rem'
+                    }}
+                >
+                    <aside>
+                        <Card title="Add New City">
+                            <Suspense fallback={<div>Loading Search...</div>}>
+                                <SearchInput />
+                            </Suspense>
+                            <p
+                                style={{
+                                    fontSize: '0.8rem',
+                                    color: '#888',
+                                    marginTop: '1rem'
+                                }}
+                            >
+                                Tip: Search by city name and country code (e.g.
+                                "London, GB")
+                            </p>
+                        </Card>
+                    </aside>
+                    <section>
+                        <Card title="Weather Feed">
+                            <Suspense fallback={<div>Loading Display...</div>}>
+                                <WeatherCards />
+                            </Suspense>
+                        </Card>
+                    </section>
+                </div>
+            </main>
         </div>
     );
 };
