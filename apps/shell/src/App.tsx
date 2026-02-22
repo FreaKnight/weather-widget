@@ -30,7 +30,7 @@ const App = () => {
             style={{
                 maxWidth: '800px',
                 margin: '0 auto',
-                fontFamily: 'sans-serif',
+                fontFamily: 'sans-serif'
             }}
         >
             <header
@@ -49,12 +49,16 @@ const App = () => {
                     <h3>Your Saved Cities</h3>
                     <ul>
                         {favorites.map((favorite) => {
-                            const { city, coords } = favorite;
-                            return (
-                                <li key={`${coords.lat}-${coords.lon}`}>
-                                    {city}
-                                </li>
-                            );
+                            if (favorite) {
+                                const { city, coords } = favorite;
+                                if (city && coords?.lat && coords?.lon) {
+                                    return (
+                                        <li key={`${coords.lat}-${coords.lon}`}>
+                                            {city}
+                                        </li>
+                                    );
+                                }
+                            }
                         })}
                     </ul>
                 </section>

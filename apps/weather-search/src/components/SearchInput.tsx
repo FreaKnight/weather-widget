@@ -85,7 +85,7 @@ const SearchInput = () => {
                         const coords = `${lat}-${lon}`;
                         const city = `${name}, ${state ? state + ',' : ''}${country}`;
                         const current = LocalDB.getSettings();
-                        const disabled = !!current.favorites.filter(
+                        const disabled = !current.favorites.filter(
                             (favorite) => {
                                 const { coords } = favorite;
                                 return coords.lat === lat && coords.lon === lon;
