@@ -15,6 +15,7 @@
   "type": "module",
   "dependencies": {
     "@weather/storage": "workspace:*",
+    "@weather/ui": "workspace:*",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
