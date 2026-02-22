@@ -78,7 +78,7 @@ const SearchInput = () => {
                     {suggestions.map((suggestion) => {
                         const { lat, lon, name, state, country } = suggestion;
                         const coords = `${lat}-${lon}`;
-                        const city = `${name}, ${state ? state + ',' : ''}${country}`;
+                        const city = `${name}, ${state ? state + ',' : ''} ${country}`;
                         const current = LocalDB.getSettings();
                         const disabled = !!current.favorites.find(
                             (favorite) => {

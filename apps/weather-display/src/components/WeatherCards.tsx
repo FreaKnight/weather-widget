@@ -2,19 +2,21 @@
 
 import React, { useEffect, useState } from 'react';
 import { Favorites, LocalDB, OpenWeatherData } from '@weather/storage';
-import { Card, Button } from '@weather/ui';
+import { Card, Button, CardSkeleton } from '@weather/ui';
 import { Coordinates } from 'packages/storage/types/Coordinates';
 
 const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
 const WeatherCards = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [weatherData, setWeatherData] = useState<OpenWeatherData[]>([]);
     const [favorites, setFavorites] = useState<Favorites[]>(
         LocalDB.getSettings().favorites
     );
 
     const fetchWeather = async (currentFavorites: Favorites[]) => {
-        if (currentFavorites?.length > 0) {
+        if (currentFavorites?.length >= 0) {
+            setIsLoading(true);
             // TODO: improve the await in loop
             const promises = currentFavorites.map(async (favorite) => {
                 const { city } = favorite;
@@ -25,6 +27,7 @@ const WeatherCards = () => {
             });
             const results = await Promise.all(promises);
             setWeatherData(results.filter((data) => data.cod === 200));
+            setIsLoading(false);
         }
     };
 
@@ -33,7 +36,13 @@ const WeatherCards = () => {
         const current = LocalDB.getSettings();
         const updatedFavorites = current.favorites.filter((fav) => {
             const { coords } = fav;
-            return coords.lat !== lat && coords.lon !== lon;
+            // The API coords are not accurate between the weather data and Geo requests, flooring results for match
+            // Adding another api request to normalize coords shouldnt happen, api should be updated to return consistent results over its endpoints
+            // This presents an issue with deleting saved cities that are within a deg difference
+            return (
+                Math.floor(coords.lat) !== Math.floor(lat) &&
+                Math.floor(coords.lon) !== Math.floor(lon)
+            );
         });
         LocalDB.saveSettings({
             ...current,
@@ -53,6 +62,8 @@ const WeatherCards = () => {
         return () =>
             window.removeEventListener('weather_storage_update', handleUpdate);
     }, []);
+
+    if (isLoading) return <CardSkeleton />;
 
     return (
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>

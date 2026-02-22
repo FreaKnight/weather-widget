@@ -47,3 +47,17 @@ export const Card: React.FC<CardProps> = ({ children, title, onClose }) => (
         {children}
     </div>
 );
+
+export const CardSkeleton: React.FC<{}> = () => (
+    <div
+        style={{
+            height: '150px',
+            minWidth: '200px',
+            borderRadius: '12px',
+            background:
+                'linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%)',
+            backgroundSize: '200% 100%',
+            animation: 'loading-shimmer 1.5s infinite'
+        }}
+    ></div>
+);
