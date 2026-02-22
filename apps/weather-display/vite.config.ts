@@ -12,7 +12,7 @@ export default defineConfig({
             exposes: {
                 './WeatherCards': './src/components/WeatherCards.tsx'
             },
-            shared: ['react', 'react-dom', '@weather/storage']
+            shared: ['react', 'react-dom', '@weather/storage', '@weather/ui']
         })
     ],
     build: {

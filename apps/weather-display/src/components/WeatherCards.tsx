@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Favorites, LocalDB, OpenWeatherData } from '@weather/storage';
+import { Card, Button } from '@weather/ui';
 import { Coordinates } from 'packages/storage/types/Coordinates';
 
 const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
@@ -59,40 +60,38 @@ const WeatherCards = () => {
                 const { coord } = data;
 
                 return (
-                    <div
+                    <Card
                         key={data.id}
-                        style={{
-                            border: '1px solid #ddd',
-                            padding: '1rem',
-                            borderRadius: '12px',
-                            background: '#f9f9f9',
-                            minWidth: '150px',
-                            position: 'relative'
-                        }}
+                        title={data.name}
+                        onClose={() =>
+                            handleDelete({ lat: coord.lat, lon: coord.lon })
+                        }
                     >
-                        <button
-                            onClick={() =>
-                                handleDelete({ lat: coord.lat, lon: coord.lon })
-                            }
-                            style={{
-                                position: 'absolute',
-                                top: '5px',
-                                right: '5px',
-                                border: 'none',
-                                background: 'transparent',
-                                cursor: 'pointer',
-                                fontSize: '1.2rem',
-                                color: '#999'
-                            }}
-                        >
-                            x
-                        </button>
-                        <h4>{data.name}</h4>
-                        <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-                            {Math.round(data.main.temp)}°C
-                        </p>
-                        <p>{data.weather[0].description}</p>
-                    </div>
+                        <div style={{ textAlign: 'center' }}>
+                            <p style={{ fontSize: '2rem', margin: '10px 0' }}>
+                                {Math.round(data.main.temp)}°C
+                            </p>
+                            <p
+                                style={{
+                                    color: '#666',
+                                    textTransform: 'capitalize'
+                                }}
+                            >
+                                {data.weather[0].description}
+                            </p>
+                            <Button
+                                variant="primary"
+                                style={{ marginTop: '10px', width: '100%' }}
+                                onClick={() =>
+                                    alert(
+                                        `Fetching more details for ${data.name}...`
+                                    )
+                                }
+                            >
+                                Details
+                            </Button>
+                        </div>
+                    </Card>
                 );
             })}
         </div>

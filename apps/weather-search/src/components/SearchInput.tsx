@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Favorites, LocalDB, OpenWeatherGeoData } from '@weather/storage';
+import { Input } from '@weather/ui';
 
 const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
@@ -49,28 +50,22 @@ const SearchInput = () => {
     return (
         <div
             style={{
-                border: '2px solid #3b82f6',
-                padding: '1rem',
-                borderRadius: '8px'
+                position: 'relative',
+                width: '350px'
             }}
         >
-            <input
-                type="text"
+            <Input
+                label="Find a City"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search for a city..."
-                style={{
-                    width: 'calc(100% - 18px)',
-                    padding: '8px',
-                    borderRadius: '4px',
-                    border: '1px solid #ccc'
-                }}
+                placeholder="e.g. Cape Town"
             />
             {suggestions.length > 0 && (
                 <ul
                     style={{
                         position: 'absolute',
-                        width: '22%',
+                        width: '100%',
+                        top: '100%',
                         background: '#fff',
                         border: '1px solid #ccc',
                         listStyle: 'none',
@@ -85,12 +80,13 @@ const SearchInput = () => {
                         const coords = `${lat}-${lon}`;
                         const city = `${name}, ${state ? state + ',' : ''}${country}`;
                         const current = LocalDB.getSettings();
-                        const disabled = !current.favorites.filter(
+                        const disabled = !!current.favorites.find(
                             (favorite) => {
                                 const { coords } = favorite;
                                 return coords.lat === lat && coords.lon === lon;
                             }
                         );
+
                         return (
                             <li
                                 key={coords}
@@ -102,10 +98,10 @@ const SearchInput = () => {
                                     })
                                 }
                                 style={{
-                                    color: disabled ? '#888' : '#000',
+                                    color: disabled ? '#555' : '#000',
                                     padding: '8px',
                                     borderBottom: '1px solid #eee',
-                                    backgroundColor: disabled ? '#aaa' : '#fff',
+                                    backgroundColor: disabled ? '#bbb' : '#fff',
                                     cursor: disabled ? 'not-allowed' : 'pointer'
                                 }}
                                 aria-disabled={disabled}

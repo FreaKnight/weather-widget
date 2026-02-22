@@ -12,7 +12,7 @@ export default defineConfig({
             exposes: {
                 './SearchInput': './src/components/SearchInput.tsx'
             },
-            shared: ['react', 'react-dom', '@weather/storage']
+            shared: ['react', 'react-dom', '@weather/storage', '@weather/ui']
         })
     ],
     build: {
