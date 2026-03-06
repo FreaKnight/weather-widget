@@ -21,7 +21,6 @@ export default defineConfig({
             },
             shared: sharedConfig,
             dev: true,
-            dts: false,
             manifest: true,
             shareStrategy: 'loaded-first'
         })
